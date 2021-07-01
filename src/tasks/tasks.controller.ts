@@ -31,7 +31,6 @@ export class TasksController {
 
   @Put(':id')
   async update(@Param('id') id: number, @Body() task: Task): Promise<Task> {
-    console.log('task: ', task);
     task.id = id;
     return this.taskService.update(task);
   }
