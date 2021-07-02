@@ -24,12 +24,14 @@ export class UserService {
     return this.userRepository
       .save(newUser)
       .then((result) => {
+        console.log('Result: ', result);
         return <ResultDto>{
           status: true,
           message: 'Saved',
         };
       })
       .catch((error) => {
+        console.log('Error: ', error);
         return <ResultDto>{
           status: false,
           message: 'Error on save user.',
@@ -37,5 +39,9 @@ export class UserService {
       });
 
     // return this.userRepository.create(user);
+  }
+
+  async findOne(email: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ email: email });
   }
 }

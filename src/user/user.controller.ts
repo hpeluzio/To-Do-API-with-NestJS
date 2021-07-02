@@ -1,16 +1,16 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
-  Param,
   Post,
-  Put,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { UserCreateDto } from './dto/user.create.dto';
 import { ResultDto } from 'src/dto/result.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UserController {
@@ -25,6 +25,12 @@ export class UserController {
   async create(@Body() data: UserCreateDto): Promise<ResultDto> {
     console.log('data: ', data);
     return this.userService.create(data);
+  }
+
+  @UseGuards(AuthGuard('local'))
+  @Post('login')
+  async login(@Request() req) {
+    return req.user;
   }
 
   // @Get(':id')
